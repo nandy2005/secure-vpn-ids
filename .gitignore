@@ -205,3 +205,20 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Ignore system/network configs
+/etc/
+*.key
+*.conf
+
+# Logs, temp files, editor caches
+*.log
+*.swp
+*.tmp
+
+# WireGuard sensitive files
+server_private.key
+server_public.key
+client_private.key
+client_public.key
+
