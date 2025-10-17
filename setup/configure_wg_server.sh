@@ -10,6 +10,8 @@ WG_CONF="$WG_DIR/wg0.conf"
 SERVER_PRIV="$WG_DIR/server_private.key"
 SERVER_PUB="$WG_DIR/server_public.key"
 SERVER_PORT=51820
+VPN_SUBNET="10.8.0.0/24"
+NET_IFACE="enp0s3"
 
 echo "[+] Creating WireGuard config directory (if not exists)..."
 sudo mkdir -p "$WG_DIR"
@@ -40,9 +42,9 @@ sudo chmod 600 "$WG_CONF"
 echo "[+] Enabling IP forwarding..."
 sudo sysctl -w net.ipv4.ip_forward=1
 sudo sysctl -w net.ipv6.conf.all.forwarding=1
-echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf > /dev/null
-echo "net.ipv6.conf.all.forwarding=1" | sudo tee -a /etc/sysctl.conf > /dev/null
-
+grep -qxF 'net.ipv4.ip_forward=1' /etc/sysctl.conf || echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf > /dev/null
+grep -qxF 'net.ipv6.conf.all.forwarding=1' /etc/sysctl.conf || echo "net.ipv6.conf.all.forwarding=1" | sudo tee -a /etc/sysctl.conf > /dev/null
+ 
 echo "[+] Starting WireGuard service..."
 sudo systemctl enable wg-quick@wg0
 sudo systemctl start wg-quick@wg0
