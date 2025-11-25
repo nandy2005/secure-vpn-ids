@@ -1,1 +1,1 @@
-# secure-vpn-ids
+# netdetect-custom ids
